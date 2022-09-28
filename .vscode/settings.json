@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.arrowParens": "avoid",
+  "prettier.singleQuote": true,
+  "editor.tabSize": 2,
+  "html.format.wrapAttributes": "force",
+  "html.format.wrapLineLength": 120,
+  "html.format.wrapAttributesIndentSize": null
+}
