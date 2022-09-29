@@ -1,9 +1,9 @@
-import { CartButton } from '../../components/CartButton'
+import { ToggleCreditCard } from '../../components/ToggleCreditCard'
 
 export function Home() {
   return (
     <>
-      <CartButton />
+      <ToggleCreditCard />
     </>
   )
 }
