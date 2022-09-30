@@ -1,9 +1,11 @@
-import { ToggleCreditCard } from '../../components/ToggleCreditCard'
-
 export function Home() {
   return (
-    <>
-      <ToggleCreditCard />
-    </>
+    <div>
+      <header>
+        <div>
+          <img src="./coffee-delivery-logo.svg" alt="logo" />
+        </div>
+      </header>
+    </div>
   )
 }
