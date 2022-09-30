@@ -1,11 +1,10 @@
+import { Header } from '../../components/Header'
+import { HomeContainer } from './style'
+
 export function Home() {
   return (
-    <div>
-      <header>
-        <div>
-          <img src="./coffee-delivery-logo.svg" alt="logo" />
-        </div>
-      </header>
-    </div>
+    <HomeContainer>
+      <Header />
+    </HomeContainer>
   )
 }
