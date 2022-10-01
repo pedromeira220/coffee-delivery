@@ -1,3 +1,4 @@
+import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 import { HeroItem } from './components/HeroItem'
 import {
   CoffeeImg,
@@ -20,10 +21,26 @@ export function Hero() {
           </Subtitle>
         </TitleWrapper>
         <HeroItemsWrapper>
-          <HeroItem />
-          <HeroItem />
-          <HeroItem />
-          <HeroItem />
+          <HeroItem
+            text="Compra simples e segura"
+            color="yellow-dark"
+            icon={<ShoppingCart weight="fill" size={16} />}
+          />
+          <HeroItem
+            text="Embalagem matem o café intacto"
+            color="gray"
+            icon={<Package size={16} weight="fill" />}
+          />
+          <HeroItem
+            text="Entrega rápida e rastreada"
+            color="yellow"
+            icon={<Timer size={16} weight="fill" />}
+          />
+          <HeroItem
+            text="O café chega fresquinho até você"
+            color="purple"
+            icon={<Coffee size={16} weight="fill" />}
+          />
         </HeroItemsWrapper>
       </div>
 

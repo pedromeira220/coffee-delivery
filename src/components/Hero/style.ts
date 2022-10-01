@@ -41,7 +41,7 @@ export const Subtitle = styled.h4`
 `
 
 export const HeroItemsWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 0;
 `
