@@ -12,7 +12,6 @@ export const RemoveButtonContainer = styled.button`
   transition-duration: 0.1s;
   line-height: 160%;
   font-size: 0.75rem;
-  height: 2rem;
   padding: 0.5rem;
 
   &:hover {

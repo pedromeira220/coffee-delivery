@@ -6,47 +6,49 @@ export const CheckoutContainer = styled.div`
   gap: 2rem;
   margin-top: 2.5rem;
 
-  & > div {
-  }
-
   div:nth-child(1) {
   }
   div:nth-child(2) {
-    & > div {
-      background-color: ${props => props.theme['base-card']};
-      padding: 2.5rem;
+  }
+`
 
-      footer {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-        width: 100%;
+export const SelectCoffeeWrapper = styled.div`
+  & > div {
+    background-color: ${props => props.theme['base-card']};
+    padding: 2.5rem;
+    border-radius: 6px 44px;
+    margin-top: 1rem;
+  }
 
-        div {
-          display: flex;
-          width: 100%;
-          align-items: center;
-          justify-content: space-between;
-        }
+  footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
 
-        span {
-          font-size: 0.875rem;
-        }
+    div {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        span,
-        h3 {
-          line-height: 130%;
-        }
+    span {
+      font-size: 0.875rem;
+    }
 
-        h3 {
-          font-size: 1.25rem;
-        }
+    span,
+    h3 {
+      line-height: 130%;
+    }
 
-        button {
-          margin-top: 1.5rem;
-          width: 100%;
-        }
-      }
+    h3 {
+      font-size: 1.25rem;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
     }
   }
 `

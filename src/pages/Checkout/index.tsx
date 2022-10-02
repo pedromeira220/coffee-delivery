@@ -1,5 +1,6 @@
 import { PrimaryButton } from '../../components/PrimaryButton'
-import { CheckoutContainer, ColumnTitle } from './style'
+import { SelectedCoffeeItem } from './components/SelectedCoffeeItem'
+import { CheckoutContainer, ColumnTitle, SelectCoffeeWrapper } from './style'
 
 export function Checkout() {
   return (
@@ -7,9 +8,11 @@ export function Checkout() {
       <div>
         <ColumnTitle>Complete seu pedido</ColumnTitle>
       </div>
-      <div>
+      <SelectCoffeeWrapper>
         <ColumnTitle>Cafés selecionados</ColumnTitle>
+
         <div>
+          <SelectedCoffeeItem />
           <footer>
             <div>
               <span>Total dos itens</span>
@@ -26,7 +29,7 @@ export function Checkout() {
             <PrimaryButton text="Confirmar pedido" />
           </footer>
         </div>
-      </div>
+      </SelectCoffeeWrapper>
     </CheckoutContainer>
   )
 }
