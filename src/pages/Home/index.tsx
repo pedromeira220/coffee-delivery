@@ -1,3 +1,4 @@
+import { CoffeeGallery } from '../../components/CoffeeGallery'
 import { Header } from '../../components/Header'
 import { Hero } from '../../components/Hero'
 import { HomeContainer, HomeWrapper } from './style'
@@ -8,6 +9,7 @@ export function Home() {
       <HomeWrapper>
         <Header />
         <Hero />
+        <CoffeeGallery />
       </HomeWrapper>
     </HomeContainer>
   )

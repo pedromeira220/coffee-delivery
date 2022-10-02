@@ -8,7 +8,6 @@ export function ButtonIcon() {
   return (
     <ButtonIconContainer>
       <ShoppingCart size={22} weight="fill" color={theme.white} />
-      teste
     </ButtonIconContainer>
   )
 }
