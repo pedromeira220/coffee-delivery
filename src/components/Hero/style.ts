@@ -15,10 +15,26 @@ export const HeroContainer = styled.div`
     height: 100%;
     gap: 4rem;
   }
+
+  @media (max-width: 1048px) {
+    & {
+      flex-wrap: wrap;
+    }
+
+    & > div {
+      align-items: flex-start;
+    }
+  }
 `
 
 export const CoffeeImg = styled.img`
   max-height: 22.5rem;
+
+  @media (max-width: 1048px) {
+    & {
+      display: none;
+    }
+  }
 `
 
 export const TitleWrapper = styled.div`
@@ -44,4 +60,8 @@ export const HeroItemsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem 0;
+
+  @media (max-width: 750px) {
+    grid-template-columns: 1fr;
+  }
 `

@@ -13,10 +13,22 @@ export const HeaderContainer = styled.header`
     align-items: center;
     justify-content: center;
   }
+  @media (max-width: 472px) {
+    & > div {
+      justify-content: space-between;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+  }
 `
 
 export const LogoImgComponent = styled.img`
   width: 5.25rem;
+  @media (max-width: 472px) {
+    & {
+      display: none;
+    }
+  }
 `
 
 export const AddressButton = styled.button`

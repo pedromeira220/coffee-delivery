@@ -12,5 +12,6 @@ export const CoffeeGalleryContainer = styled.section`
     flex-wrap: wrap;
     margin-top: 3.375rem;
     gap: 2rem;
+    justify-content: space-around;
   }
 `
