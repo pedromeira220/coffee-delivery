@@ -13,6 +13,7 @@ export const ToggleCreditCardButtonContainer = styled(Toggle.Root)`
   border-radius: 6px;
   transition: 0.1s;
   border: 1px solid transparent;
+  background-color: ${props => props.theme['base-button']};
 
   &:hover {
     background-color: ${props => props.theme['base-hover']};
@@ -28,6 +29,8 @@ export const ToggleCreditCardButtonContainer = styled(Toggle.Root)`
 
   span {
     text-transform: uppercase;
+    font-size: 0.75rem;
+    line-height: 160%;
   }
 
   svg {

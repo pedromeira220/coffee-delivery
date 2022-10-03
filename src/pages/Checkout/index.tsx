@@ -1,10 +1,14 @@
-import { MapPinLine } from 'phosphor-react'
+import { CurrencyDollar, MapPinLine } from 'phosphor-react'
 import { PrimaryButton } from '../../components/PrimaryButton'
+import { ToggleCreditCard } from '../../components/ToggleCreditCard'
 import { SelectedCoffeeItem } from './components/SelectedCoffeeItem'
 import {
   CheckoutContainer,
   ColumnTitle,
   FormContainer,
+  FormHeader,
+  PaymentContainer,
+  PaymentHeader,
   SelectCoffeeWrapper,
 } from './style'
 
@@ -15,15 +19,33 @@ export function Checkout() {
         <ColumnTitle>Complete seu pedido</ColumnTitle>
 
         <div>
-          <header>
+          <FormHeader>
             <MapPinLine size={22} />
             <div>
               <h5>Endereço de entrega</h5>
               <span>Informe o endereço onde deseja receber seu pedido</span>
             </div>
-          </header>
+          </FormHeader>
         </div>
+
+        <PaymentContainer>
+          <PaymentHeader>
+            <CurrencyDollar size={22} />
+            <div>
+              <h5>Pagamento</h5>
+              <span>
+                O pagamento é feito na entrega. Escolha a forma que deseja pagar
+              </span>
+            </div>
+          </PaymentHeader>
+          <div>
+            <ToggleCreditCard />
+            <ToggleCreditCard />
+            <ToggleCreditCard />
+          </div>
+        </PaymentContainer>
       </FormContainer>
+
       <SelectCoffeeWrapper>
         <ColumnTitle>Cafés selecionados</ColumnTitle>
 

@@ -18,29 +18,66 @@ export const FormContainer = styled.div`
     margin-top: 1rem;
     border-radius: 6px;
     padding: 2.5rem;
+  }
+`
 
-    header {
-      display: flex;
-      justify-content: flex-start;
-      gap: 0.5rem;
+export const FormHeader = styled.header`
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
 
-      svg {
-        color: ${props => props.theme['yellow-dark']};
-      }
+  svg {
+    color: ${props => props.theme['yellow-dark']};
+  }
 
-      h5 {
-        font-size: 1rem;
-        line-height: 130%;
-        font-weight: 400;
-        color: ${props => props.theme['base-subtitle']};
-      }
+  h5 {
+    font-size: 1rem;
+    line-height: 130%;
+    font-weight: 400;
+    color: ${props => props.theme['base-subtitle']};
+  }
 
-      span {
-        color: ${props => props.theme['base-text']};
-        line-height: 130%;
-        font-size: 0.875rem;
-      }
-    }
+  span {
+    color: ${props => props.theme['base-text']};
+    line-height: 130%;
+    font-size: 0.875rem;
+  }
+`
+
+export const PaymentContainer = styled.div`
+  background-color: ${props => props.theme['base-card']};
+  margin-top: 0.75rem;
+  border-radius: 6px;
+  padding: 2.5rem;
+`
+
+export const PaymentHeader = styled.header`
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+
+  svg {
+    color: ${props => props.theme['purple']};
+  }
+
+  h5 {
+    font-size: 1rem;
+    line-height: 130%;
+    font-weight: 400;
+    color: ${props => props.theme['base-subtitle']};
+  }
+
+  span {
+    color: ${props => props.theme['base-text']};
+    line-height: 130%;
+    font-size: 0.875rem;
+  }
+
+  & ~ div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
   }
 `
 
