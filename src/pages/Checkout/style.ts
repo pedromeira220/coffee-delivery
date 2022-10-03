@@ -12,6 +12,38 @@ export const CheckoutContainer = styled.div`
   }
 `
 
+export const FormContainer = styled.div`
+  & > div {
+    background-color: ${props => props.theme['base-card']};
+    margin-top: 1rem;
+    border-radius: 6px;
+    padding: 2.5rem;
+
+    header {
+      display: flex;
+      justify-content: flex-start;
+      gap: 0.5rem;
+
+      svg {
+        color: ${props => props.theme['yellow-dark']};
+      }
+
+      h5 {
+        font-size: 1rem;
+        line-height: 130%;
+        font-weight: 400;
+        color: ${props => props.theme['base-subtitle']};
+      }
+
+      span {
+        color: ${props => props.theme['base-text']};
+        line-height: 130%;
+        font-size: 0.875rem;
+      }
+    }
+  }
+`
+
 export const SelectCoffeeWrapper = styled.div`
   & > div {
     background-color: ${props => props.theme['base-card']};

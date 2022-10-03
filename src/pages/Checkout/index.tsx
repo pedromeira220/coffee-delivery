@@ -1,13 +1,29 @@
+import { MapPinLine } from 'phosphor-react'
 import { PrimaryButton } from '../../components/PrimaryButton'
 import { SelectedCoffeeItem } from './components/SelectedCoffeeItem'
-import { CheckoutContainer, ColumnTitle, SelectCoffeeWrapper } from './style'
+import {
+  CheckoutContainer,
+  ColumnTitle,
+  FormContainer,
+  SelectCoffeeWrapper,
+} from './style'
 
 export function Checkout() {
   return (
     <CheckoutContainer>
-      <div>
+      <FormContainer>
         <ColumnTitle>Complete seu pedido</ColumnTitle>
-      </div>
+
+        <div>
+          <header>
+            <MapPinLine size={22} />
+            <div>
+              <h5>Endereço de entrega</h5>
+              <span>Informe o endereço onde deseja receber seu pedido</span>
+            </div>
+          </header>
+        </div>
+      </FormContainer>
       <SelectCoffeeWrapper>
         <ColumnTitle>Cafés selecionados</ColumnTitle>
 

@@ -10,5 +10,6 @@ export const PrimaryButtonContainer = styled.button`
 
   &:hover {
     background-color: ${props => props.theme['yellow-dark']};
+    cursor: pointer;
   }
 `
