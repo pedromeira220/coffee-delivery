@@ -44,6 +44,10 @@ export const FormHeader = styled.header`
   }
 `
 
+export const FormGrid = styled.div`
+  display: grid;
+`
+
 export const PaymentContainer = styled.div`
   background-color: ${props => props.theme['base-card']};
   margin-top: 0.75rem;

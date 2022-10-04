@@ -18,6 +18,7 @@ export const ToggleCreditCardButtonContainer = styled(Toggle.Root)`
   &:hover {
     background-color: ${props => props.theme['base-hover']};
     color: ${props => props.theme['base-subtitle']};
+    cursor: pointer;
   }
   &[data-state='on'] {
     color: ${props => props.theme['base-text']};
