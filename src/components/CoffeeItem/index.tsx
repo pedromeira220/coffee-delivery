@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react'
 import { CoffeeContext, IAvailableCoffee } from '../../contexts/CoffeeContext'
+import { formatCoffeePrice } from '../../helpers/formatCoffeePrice'
 import { AmountCoffeeInput } from '../AmountCoffeeInput'
 import { ButtonIcon } from '../ButtonIcon'
 import {
@@ -23,18 +24,9 @@ export function CoffeeItem({ availableCoffee }: CoffeeItemProps) {
 
   const formattedCoffeePrice = formatCoffeePrice(availableCoffee.price)
 
-  function formatCoffeePrice(price: number) {
-    const formattedUsingLib = new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(price)
-
-    const [symbol, amount] = formattedUsingLib.split(' ')
-    return amount
-  }
-
   function handleAddToCart() {
     addCoffeeInCart(availableCoffee, amountOfCoffee)
+    setAmountOfCoffee(0)
   }
 
   function handleAmountCoffeeInputChange(
@@ -63,7 +55,10 @@ export function CoffeeItem({ availableCoffee }: CoffeeItemProps) {
           <CurrencySymbol>R$</CurrencySymbol>{' '}
           <CoffeePrice>{formattedCoffeePrice}</CoffeePrice>
         </span>
-        <AmountCoffeeInput onChange={handleAmountCoffeeInputChange} />
+        <AmountCoffeeInput
+          onChange={handleAmountCoffeeInputChange}
+          value={amountOfCoffee}
+        />
         <ButtonIcon onClick={handleAddToCart} />
       </CoffeeItemFooter>
     </CoffeeItemContainer>

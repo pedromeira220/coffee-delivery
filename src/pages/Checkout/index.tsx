@@ -1,7 +1,10 @@
 import { CurrencyDollar, MapPinLine } from 'phosphor-react'
+import { useContext } from 'react'
 
 import { PrimaryButton } from '../../components/PrimaryButton'
 import { ToggleCreditCard } from '../../components/ToggleCreditCard'
+import { CoffeeContext, ICoffee } from '../../contexts/CoffeeContext'
+import { formatCoffeePrice } from '../../helpers/formatCoffeePrice'
 import { SelectedCoffeeItem } from './components/SelectedCoffeeItem'
 import {
   CheckoutContainer,
@@ -16,6 +19,26 @@ import {
 } from './style'
 
 export function Checkout() {
+  const { coffeesInCart } = useContext(CoffeeContext)
+
+  const sumOfCoffeesPrice = calculateSumOfCoffeesPrice(coffeesInCart)
+
+  function calculateSumOfCoffeesPrice(coffeeList: ICoffee[]) {
+    let priceAmount = 0
+
+    coffeeList.forEach(coffee => {
+      priceAmount += coffee.price * coffee.amount
+    })
+
+    return priceAmount
+  }
+
+  const deliveryCost = 3.5
+  const formattedDeliveryCost = formatCoffeePrice(deliveryCost)
+
+  const totalCost = sumOfCoffeesPrice + deliveryCost
+  const formattedTotalCost = formatCoffeePrice(totalCost)
+
   return (
     <CheckoutContainer>
       <FormContainer>
@@ -62,19 +85,22 @@ export function Checkout() {
         <ColumnTitle>Cafés selecionados</ColumnTitle>
 
         <div>
-          <SelectedCoffeeItem />
+          {coffeesInCart.map(coffee => {
+            return <SelectedCoffeeItem coffee={coffee} key={coffee.id} />
+          })}
+
           <footer>
             <div>
               <span>Total dos itens</span>
-              <span>R$ 29,70</span>
+              <span>R$ {sumOfCoffeesPrice}</span>
             </div>
             <div>
               <span>Entrega</span>
-              <span>R$ 3,50</span>
+              <span>R$ {formattedDeliveryCost}</span>
             </div>
             <div>
               <h3>Total</h3>
-              <h3>R$ 33,20</h3>
+              <h3>R$ {formattedTotalCost}</h3>
             </div>
             <PrimaryButton text="Confirmar pedido" />
           </footer>

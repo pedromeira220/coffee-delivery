@@ -5,5 +5,5 @@ interface AmountCoffeeInputProps
   extends InputHTMLAttributes<HTMLInputElement> {}
 
 export function AmountCoffeeInput({ ...rest }: AmountCoffeeInputProps) {
-  return <Input type="number" defaultValue={0} min={0} {...rest} />
+  return <Input type="number" min={0} {...rest} />
 }
