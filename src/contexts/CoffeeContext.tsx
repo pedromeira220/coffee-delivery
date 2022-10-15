@@ -24,6 +24,8 @@ interface CoffeeContextType {
   coffeesInCart: ICoffee[]
   setCoffeesInCart: React.Dispatch<React.SetStateAction<ICoffee[]>>
   addCoffeeInCart: (availableCoffee: IAvailableCoffee, amount: number) => void
+  updateCoffeeInCartById: (id: string, amount: number) => void
+  deleteCoffeeInCartById: (id: string) => void
 }
 
 export const CoffeeContext = createContext({} as CoffeeContextType)
@@ -78,6 +80,8 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
     },
   ])
 
+  const [coffeesInCart, setCoffeesInCart] = useState<ICoffee[]>([])
+
   function addCoffeeInCart(availableCoffee: IAvailableCoffee, amount: number) {
     setCoffeesInCart(state => {
       const newCoffeesInCart = [
@@ -89,11 +93,27 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
     })
   }
 
-  const [coffeesInCart, setCoffeesInCart] = useState<ICoffee[]>([])
+  function updateCoffeeInCartById(id: string, amount: number) {
+    const newCoffeeInCartList = coffeesInCart.map(coffee => {
+      if (coffee.id === id) {
+        return { ...coffee, amount }
+      }
+      return coffee
+    })
+
+    setCoffeesInCart(newCoffeeInCartList)
+  }
+
+  function deleteCoffeeInCartById(id: string) {
+    const newCoffeeInCartList = coffeesInCart.filter(coffee => coffee.id !== id)
+    setCoffeesInCart(newCoffeeInCartList)
+  }
 
   return (
     <CoffeeContext.Provider
       value={{
+        deleteCoffeeInCartById,
+        updateCoffeeInCartById,
         listOfAvailableCoffees,
         coffeesInCart,
         setCoffeesInCart,
