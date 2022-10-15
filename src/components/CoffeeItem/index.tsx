@@ -1,3 +1,4 @@
+import { IAvailableCoffee } from '../../contexts/CoffeeContext'
 import { AmountCoffeeInput } from '../AmountCoffeeInput'
 import { ButtonIcon } from '../ButtonIcon'
 import {
@@ -10,20 +11,39 @@ import {
   CurrencySymbol,
 } from './style'
 
-export function CoffeeItem() {
+interface CoffeeItemProps {
+  availableCoffee: IAvailableCoffee
+}
+
+export function CoffeeItem({ availableCoffee }: CoffeeItemProps) {
+  const formattedCoffeePrice = formatCoffeePrice(availableCoffee.price)
+
+  function formatCoffeePrice(price: number) {
+    const formattedUsingLib = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price)
+
+    const [symbol, amount] = formattedUsingLib.split(' ')
+    return amount
+  }
+
   return (
     <CoffeeItemContainer>
       <div>
-        <CoffeeImage src="./coffee-expresso.png" alt="Café expresso imagem" />
+        <CoffeeImage src={availableCoffee.img} />
         <CoffeeTagWrapper>
-          <CoffeeTag>TRADICIONAL</CoffeeTag>
+          {availableCoffee.tagList.map(tag => {
+            return <CoffeeTag key={tag}>{tag}</CoffeeTag>
+          })}
         </CoffeeTagWrapper>
-        <h4>Expresso tradicional</h4>
-        <p>O tradicional café feito com água quente e grãos moídos</p>
+        <h4>{availableCoffee.title}</h4>
+        <p>{availableCoffee.description}</p>
       </div>
       <CoffeeItemFooter>
         <span>
-          <CurrencySymbol>R$</CurrencySymbol> <CoffeePrice>9,90</CoffeePrice>
+          <CurrencySymbol>R$</CurrencySymbol>{' '}
+          <CoffeePrice>{formattedCoffeePrice}</CoffeePrice>
         </span>
         <AmountCoffeeInput />
         <ButtonIcon />

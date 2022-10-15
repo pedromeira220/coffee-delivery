@@ -45,6 +45,9 @@ export const CoffeeTag = styled.span`
   color: ${props => props.theme['yellow-dark']};
   padding: 0.25rem 0.5rem;
   border-radius: 100px;
+  font-size: 0.625rem;
+  font-weight: bold;
+  text-transform: uppercase;
 `
 
 export const CoffeeItemFooter = styled.footer`
