@@ -1,5 +1,5 @@
 import { CurrencyDollar, MapPinLine } from 'phosphor-react'
-import { Input } from '../../components/Input'
+
 import { PrimaryButton } from '../../components/PrimaryButton'
 import { ToggleCreditCard } from '../../components/ToggleCreditCard'
 import { SelectedCoffeeItem } from './components/SelectedCoffeeItem'
@@ -9,6 +9,7 @@ import {
   FormContainer,
   FormGrid,
   FormHeader,
+  FormInput,
   PaymentContainer,
   PaymentHeader,
   SelectCoffeeWrapper,
@@ -29,7 +30,13 @@ export function Checkout() {
             </div>
           </FormHeader>
           <FormGrid>
-            <Input placeholder="CEP" />
+            <FormInput gridArea="CEP" placeholder="CEP" />
+            <FormInput gridArea="ST" placeholder="Rua" />
+            <FormInput gridArea="NU" placeholder="Número" />
+            <FormInput gridArea="COM" placeholder="Complemento" />
+            <FormInput gridArea="DI" placeholder="Bairro" />
+            <FormInput gridArea="CI" placeholder="Cidade" />
+            <FormInput gridArea="UF" placeholder="UF" />
           </FormGrid>
         </div>
 

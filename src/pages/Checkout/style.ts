@@ -1,6 +1,7 @@
 import styled from 'styled-components'
+import { Input } from '../../components/Input'
 
-export const CheckoutContainer = styled.div`
+export const CheckoutContainer = styled.form`
   display: grid;
   grid-template-columns: 1fr 28rem;
   gap: 2rem;
@@ -46,6 +47,19 @@ export const FormHeader = styled.header`
 
 export const FormGrid = styled.div`
   display: grid;
+  grid-template-columns: 12.5rem 17.25rem 3.75rem;
+  gap: 0.75rem;
+  margin-top: 2rem;
+
+  grid-template-areas: 'CEP n n' 'ST ST ST' 'NU COM COM' 'DI CI UF';
+`
+
+interface FormInputProps {
+  gridArea: string
+}
+
+export const FormInput = styled(Input)<FormInputProps>`
+  grid-area: ${props => props.gridArea};
 `
 
 export const PaymentContainer = styled.div`
