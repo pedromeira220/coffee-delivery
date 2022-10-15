@@ -18,8 +18,6 @@ export const CheckoutContainer = styled.form`
 `
 
 export const FormContainer = styled.div`
-  max-width: calc(80rem - 28rem - 2rem);
-
   & > div {
     background-color: ${props => props.theme['base-card']};
     margin-top: 1rem;

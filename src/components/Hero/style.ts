@@ -28,7 +28,7 @@ export const HeroContainer = styled.div`
 `
 
 export const CoffeeImg = styled.img`
-  max-height: 22.5rem;
+  max-height: 22rem;
 
   @media (max-width: 1048px) {
     & {

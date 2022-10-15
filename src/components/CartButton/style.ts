@@ -11,6 +11,10 @@ export const CartButtonContainer = styled.button`
   svg {
     color: ${props => props.theme['yellow-dark']};
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 export const Counter = styled.span`

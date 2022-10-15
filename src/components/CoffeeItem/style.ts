@@ -34,7 +34,6 @@ export const CoffeeItemContainer = styled.div`
 
 export const CoffeeImage = styled.img`
   width: 7.5rem;
-  top: -2rem;
 `
 
 export const CoffeeTagWrapper = styled.span`
