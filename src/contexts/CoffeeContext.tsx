@@ -9,8 +9,21 @@ export interface IAvailableCoffee {
   tagList: string[]
 }
 
+export interface ICoffee {
+  id: string
+  title: string
+  description: string
+  price: number
+  img: string
+  tagList: string[]
+  amount: number
+}
+
 interface CoffeeContextType {
   listOfAvailableCoffees: IAvailableCoffee[]
+  coffeesInCart: ICoffee[]
+  setCoffeesInCart: React.Dispatch<React.SetStateAction<ICoffee[]>>
+  addCoffeeInCart: (availableCoffee: IAvailableCoffee, amount: number) => void
 }
 
 export const CoffeeContext = createContext({} as CoffeeContextType)
@@ -65,8 +78,28 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
     },
   ])
 
+  function addCoffeeInCart(availableCoffee: IAvailableCoffee, amount: number) {
+    setCoffeesInCart(state => {
+      const newCoffeesInCart = [
+        { ...availableCoffee, amount: amount },
+        ...state,
+      ]
+
+      return newCoffeesInCart
+    })
+  }
+
+  const [coffeesInCart, setCoffeesInCart] = useState<ICoffee[]>([])
+
   return (
-    <CoffeeContext.Provider value={{ listOfAvailableCoffees }}>
+    <CoffeeContext.Provider
+      value={{
+        listOfAvailableCoffees,
+        coffeesInCart,
+        setCoffeesInCart,
+        addCoffeeInCart,
+      }}
+    >
       {children}
     </CoffeeContext.Provider>
   )
