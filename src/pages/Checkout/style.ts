@@ -11,9 +11,15 @@ export const CheckoutContainer = styled.form`
   }
   div:nth-child(2) {
   }
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 export const FormContainer = styled.div`
+  max-width: calc(80rem - 28rem - 2rem);
+
   & > div {
     background-color: ${props => props.theme['base-card']};
     margin-top: 1rem;
@@ -100,6 +106,8 @@ export const PaymentHeader = styled.header`
 `
 
 export const SelectCoffeeWrapper = styled.div`
+  max-width: 28rem;
+
   & > div {
     background-color: ${props => props.theme['base-card']};
     padding: 2.5rem;
