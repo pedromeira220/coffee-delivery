@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useReducer, useState } from 'react'
 
 export interface IAvailableCoffee {
   id: string
@@ -22,7 +22,6 @@ export interface ICoffee {
 interface CoffeeContextType {
   listOfAvailableCoffees: IAvailableCoffee[]
   coffeesInCart: ICoffee[]
-  setCoffeesInCart: React.Dispatch<React.SetStateAction<ICoffee[]>>
   addCoffeeInCart: (availableCoffee: IAvailableCoffee, amount: number) => void
   updateCoffeeInCartById: (id: string, amount: number) => void
   deleteCoffeeInCartById: (id: string) => void
@@ -80,33 +79,83 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
     },
   ])
 
-  const [coffeesInCart, setCoffeesInCart] = useState<ICoffee[]>([])
+  const [coffeesInCart, dispatch] = useReducer(
+    (state: ICoffee[], action: any) => {
+      switch (action.type) {
+        case 'DELETE_COFFEE_IN_CART_BY_ID':
+          return state.filter(coffee => coffee.id !== action.payload.coffeeId)
+        case 'ADD_COFFEE_IN_CART':
+          const newCoffeesInCart = [
+            {
+              ...action.payload.availableCoffee,
+              amount: action.payload.amount,
+            },
+            ...state,
+          ]
+
+          return newCoffeesInCart
+        case 'UPDATE_COFFEE_IN_CART_BY_ID':
+          return state.map(coffee => {
+            if (coffee.id === action.payload.id) {
+              return { ...coffee, amount: action.payload.amount }
+            }
+            return coffee
+          })
+        default:
+          return state
+      }
+    },
+    []
+  )
 
   function addCoffeeInCart(availableCoffee: IAvailableCoffee, amount: number) {
-    setCoffeesInCart(state => {
+    /* setCoffeesInCart(state => {
       const newCoffeesInCart = [
         { ...availableCoffee, amount: amount },
         ...state,
       ]
 
       return newCoffeesInCart
+    }) */
+
+    dispatch({
+      type: 'ADD_COFFEE_IN_CART',
+      payload: {
+        availableCoffee,
+        amount,
+      },
     })
   }
 
   function updateCoffeeInCartById(id: string, amount: number) {
-    const newCoffeeInCartList = coffeesInCart.map(coffee => {
+    /* const newCoffeeInCartList = coffeesInCart.map(coffee => {
       if (coffee.id === id) {
         return { ...coffee, amount }
       }
       return coffee
     })
 
-    setCoffeesInCart(newCoffeeInCartList)
+    setCoffeesInCart(newCoffeeInCartList) */
+
+    dispatch({
+      type: 'UPDATE_COFFEE_IN_CART',
+      payload: {
+        id,
+        amount,
+      },
+    })
   }
 
   function deleteCoffeeInCartById(id: string) {
-    const newCoffeeInCartList = coffeesInCart.filter(coffee => coffee.id !== id)
-    setCoffeesInCart(newCoffeeInCartList)
+    dispatch({
+      type: 'DELETE_COFFEE_IN_CART_BY_ID',
+      payload: {
+        coffeeId: id,
+      },
+    })
+
+    /* const newCoffeeInCartList = coffeesInCart.filter(coffee => coffee.id !== id)
+    setCoffeesInCart(newCoffeeInCartList) */
   }
 
   return (
@@ -116,7 +165,6 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
         coffeesInCart,
         deleteCoffeeInCartById,
         updateCoffeeInCartById,
-        setCoffeesInCart,
         addCoffeeInCart,
       }}
     >
