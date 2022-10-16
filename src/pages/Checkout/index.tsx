@@ -1,13 +1,20 @@
-import { CurrencyDollar, MapPinLine } from 'phosphor-react'
+import {
+  Bank,
+  CreditCard,
+  CurrencyDollar,
+  MapPinLine,
+  Money,
+} from 'phosphor-react'
 import { useContext } from 'react'
 
 import { PrimaryButton } from '../../components/PrimaryButton'
-import { ToggleCreditCard } from '../../components/ToggleCreditCard'
 import { CoffeeContext, ICoffee } from '../../contexts/CoffeeContext'
 import { formatCoffeePrice } from '../../helpers/formatCoffeePrice'
 import { SelectedCoffeeItem } from './components/SelectedCoffeeItem'
 import {
   CheckoutContainer,
+  ChoosePaymentContainer,
+  ChoosePaymentMethodButton,
   ColumnTitle,
   FormContainer,
   FormGrid,
@@ -75,11 +82,23 @@ export function Checkout() {
               </span>
             </div>
           </PaymentHeader>
-          <div>
-            <ToggleCreditCard />
-            <ToggleCreditCard />
-            <ToggleCreditCard />
-          </div>
+
+          <ChoosePaymentContainer>
+            <ChoosePaymentMethodButton value="credit_card">
+              <CreditCard size={16} />
+              <span>Cartão de crédito</span>
+            </ChoosePaymentMethodButton>
+
+            <ChoosePaymentMethodButton value="debit_card">
+              <Bank size={16} />
+              <span>Cartão de débito</span>
+            </ChoosePaymentMethodButton>
+
+            <ChoosePaymentMethodButton value="cash">
+              <Money size={16} />
+              <span>Dinheiro</span>
+            </ChoosePaymentMethodButton>
+          </ChoosePaymentContainer>
         </PaymentContainer>
       </FormContainer>
 
