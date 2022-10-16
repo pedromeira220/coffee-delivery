@@ -1,4 +1,10 @@
 import { createContext, useReducer, useState } from 'react'
+import {
+  addCoffeeInCartAction,
+  deleteCoffeeInCartByIdAction,
+  updateCoffeeInCartByIdAction,
+} from '../reducers/coffeesInCart/actions'
+import { coffeesInCartReducer } from '../reducers/coffeesInCart/reducer'
 
 export interface IAvailableCoffee {
   id: string
@@ -79,34 +85,7 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
     },
   ])
 
-  const [coffeesInCart, dispatch] = useReducer(
-    (state: ICoffee[], action: any) => {
-      switch (action.type) {
-        case 'DELETE_COFFEE_IN_CART_BY_ID':
-          return state.filter(coffee => coffee.id !== action.payload.coffeeId)
-        case 'ADD_COFFEE_IN_CART':
-          const newCoffeesInCart = [
-            {
-              ...action.payload.availableCoffee,
-              amount: action.payload.amount,
-            },
-            ...state,
-          ]
-
-          return newCoffeesInCart
-        case 'UPDATE_COFFEE_IN_CART_BY_ID':
-          return state.map(coffee => {
-            if (coffee.id === action.payload.id) {
-              return { ...coffee, amount: action.payload.amount }
-            }
-            return coffee
-          })
-        default:
-          return state
-      }
-    },
-    []
-  )
+  const [coffeesInCart, dispatch] = useReducer(coffeesInCartReducer, [])
 
   function addCoffeeInCart(availableCoffee: IAvailableCoffee, amount: number) {
     /* setCoffeesInCart(state => {
@@ -118,13 +97,7 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
       return newCoffeesInCart
     }) */
 
-    dispatch({
-      type: 'ADD_COFFEE_IN_CART',
-      payload: {
-        availableCoffee,
-        amount,
-      },
-    })
+    dispatch(addCoffeeInCartAction(availableCoffee, amount))
   }
 
   function updateCoffeeInCartById(id: string, amount: number) {
@@ -137,22 +110,11 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
 
     setCoffeesInCart(newCoffeeInCartList) */
 
-    dispatch({
-      type: 'UPDATE_COFFEE_IN_CART',
-      payload: {
-        id,
-        amount,
-      },
-    })
+    dispatch(updateCoffeeInCartByIdAction(id, amount))
   }
 
   function deleteCoffeeInCartById(id: string) {
-    dispatch({
-      type: 'DELETE_COFFEE_IN_CART_BY_ID',
-      payload: {
-        coffeeId: id,
-      },
-    })
+    dispatch(deleteCoffeeInCartByIdAction(id))
 
     /* const newCoffeeInCartList = coffeesInCart.filter(coffee => coffee.id !== id)
     setCoffeesInCart(newCoffeeInCartList) */
