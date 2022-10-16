@@ -112,10 +112,10 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
   return (
     <CoffeeContext.Provider
       value={{
-        deleteCoffeeInCartById,
-        updateCoffeeInCartById,
         listOfAvailableCoffees,
         coffeesInCart,
+        deleteCoffeeInCartById,
+        updateCoffeeInCartById,
         setCoffeesInCart,
         addCoffeeInCart,
       }}

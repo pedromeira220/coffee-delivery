@@ -25,6 +25,9 @@ export function CoffeeItem({ availableCoffee }: CoffeeItemProps) {
   const formattedCoffeePrice = formatCoffeePrice(availableCoffee.price)
 
   function handleAddToCart() {
+    if (amountOfCoffee === 0) {
+      return
+    }
     addCoffeeInCart(availableCoffee, amountOfCoffee)
     setAmountOfCoffee(0)
   }

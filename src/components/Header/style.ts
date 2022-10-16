@@ -1,6 +1,8 @@
 import { MapPin } from 'phosphor-react'
 import styled from 'styled-components'
 
+import { CartButton } from '../CartButton'
+
 export const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
@@ -45,4 +47,10 @@ export const AddressButton = styled.button`
 
 export const AddressIcon = styled(MapPin)`
   color: ${props => props.theme.purple};
+`
+export const LinkCardButton = styled(CartButton)`
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `

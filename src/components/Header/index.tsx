@@ -1,18 +1,24 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CoffeeContext, ICoffee } from '../../contexts/CoffeeContext'
-import { CartButton } from '../CartButton'
 import {
   AddressButton,
   AddressIcon,
   HeaderContainer,
+  LinkCardButton,
   LogoImgComponent,
 } from './style'
 
 export function Header() {
   const { coffeesInCart } = useContext(CoffeeContext)
 
-  const amountOfCoffeeInCart = calculateAmountOfCoffeeInCart(coffeesInCart)
+  const [amountOfCoffeeInCart, setAmountOfCoffeeInCart] = useState(
+    calculateAmountOfCoffeeInCart(coffeesInCart)
+  )
+
+  useEffect(() => {
+    setAmountOfCoffeeInCart(calculateAmountOfCoffeeInCart(coffeesInCart))
+  }, [coffeesInCart])
 
   function calculateAmountOfCoffeeInCart(coffeesInCart: ICoffee[]) {
     let amount = 0
@@ -39,9 +45,13 @@ export function Header() {
           <AddressIcon size={22} weight="fill" />
           <span>Campinas, SP</span>
         </AddressButton>
-        <Link to="/checkout">
-          <CartButton counterNumber={amountOfCoffeeInCart} />
-        </Link>
+        {amountOfCoffeeInCart ? (
+          <Link to="/checkout">
+            <LinkCardButton counterNumber={amountOfCoffeeInCart} />
+          </Link>
+        ) : (
+          <LinkCardButton counterNumber={amountOfCoffeeInCart} disabled />
+        )}
       </div>
     </HeaderContainer>
   )

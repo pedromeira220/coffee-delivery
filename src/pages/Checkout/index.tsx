@@ -39,6 +39,8 @@ export function Checkout() {
   const totalCost = sumOfCoffeesPrice + deliveryCost
   const formattedTotalCost = formatCoffeePrice(totalCost)
 
+  const isConfirmButtonDisabled = sumOfCoffeesPrice === 0
+
   return (
     <CheckoutContainer>
       <FormContainer>
@@ -96,13 +98,18 @@ export function Checkout() {
             </div>
             <div>
               <span>Entrega</span>
-              <span>R$ {formattedDeliveryCost}</span>
+              <span>
+                R$ {isConfirmButtonDisabled ? 0 : formattedDeliveryCost}
+              </span>
             </div>
             <div>
               <h3>Total</h3>
-              <h3>R$ {formattedTotalCost}</h3>
+              <h3>R$ {isConfirmButtonDisabled ? 0 : formattedTotalCost}</h3>
             </div>
-            <PrimaryButton text="Confirmar pedido" />
+            <PrimaryButton
+              text="Confirmar pedido"
+              disabled={isConfirmButtonDisabled}
+            />
           </footer>
         </div>
       </SelectCoffeeWrapper>
