@@ -3,7 +3,7 @@ import { Input } from '../../components/Input'
 
 import * as RadioGroup from '@radix-ui/react-radio-group'
 
-export const CheckoutContainer = styled.form`
+export const CheckoutContainerForm = styled.form`
   display: grid;
   grid-template-columns: 1fr 28rem;
   gap: 2rem;
