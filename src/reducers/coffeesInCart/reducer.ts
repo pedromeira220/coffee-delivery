@@ -22,6 +22,8 @@ export function coffeesInCartReducer(state: ICoffee[], action: any) {
         }
         return coffee
       })
+    case ActionTypes.CLEAR_COFFEES_IN_CART:
+      return []
     default:
       return state
   }

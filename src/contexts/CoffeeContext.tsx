@@ -1,6 +1,7 @@
 import { createContext, useReducer, useState } from 'react'
 import {
   addCoffeeInCartAction,
+  clearCoffeesInCartAction,
   deleteCoffeeInCartByIdAction,
   updateCoffeeInCartByIdAction,
 } from '../reducers/coffeesInCart/actions'
@@ -31,6 +32,7 @@ interface CoffeeContextType {
   addCoffeeInCart: (availableCoffee: IAvailableCoffee, amount: number) => void
   updateCoffeeInCartById: (id: string, amount: number) => void
   deleteCoffeeInCartById: (id: string) => void
+  clearCoffeesInCart: () => void
 }
 
 export const CoffeeContext = createContext({} as CoffeeContextType)
@@ -120,6 +122,10 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
     setCoffeesInCart(newCoffeeInCartList) */
   }
 
+  function clearCoffeesInCart() {
+    dispatch(clearCoffeesInCartAction())
+  }
+
   return (
     <CoffeeContext.Provider
       value={{
@@ -128,6 +134,7 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
         deleteCoffeeInCartById,
         updateCoffeeInCartById,
         addCoffeeInCart,
+        clearCoffeesInCart,
       }}
     >
       {children}

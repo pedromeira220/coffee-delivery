@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios, { AxiosError } from 'axios'
 import {
   Bank,
   CreditCard,
@@ -6,7 +7,7 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as zod from 'zod'
@@ -57,27 +58,24 @@ const checkoutFormSchema = zod.object({
 type CheckoutFormInputs = zod.infer<typeof checkoutFormSchema>
 
 export function Checkout() {
-  const { coffeesInCart } = useContext(CoffeeContext)
+  const { coffeesInCart, clearCoffeesInCart } = useContext(CoffeeContext)
   const { setCheckoutData } = useContext(CheckoutDataContext)
   const navigate = useNavigate()
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<CheckoutFormInputs>({
-    resolver: zodResolver(checkoutFormSchema),
-    defaultValues: {
-      paymentMethod: 'credit_card',
-      CEP: '',
-      city: '',
-      complement: '',
-      district: '',
-      number: '',
-      street: '',
-      UF: '',
-    },
-  })
+  const { handleSubmit, control, setValue, watch, setError, clearErrors } =
+    useForm<CheckoutFormInputs>({
+      resolver: zodResolver(checkoutFormSchema),
+      defaultValues: {
+        paymentMethod: 'credit_card',
+        CEP: '',
+        city: '',
+        complement: '',
+        district: '',
+        number: '',
+        street: '',
+        UF: '',
+      },
+    })
 
   const sumOfCoffeesPrice = calculateSumOfCoffeesPrice(coffeesInCart)
   const formattedSumOfCoffeesPrice = formatSubOfCoffeesPrice(sumOfCoffeesPrice)
@@ -131,8 +129,39 @@ export function Checkout() {
       },
     })
 
+    clearCoffeesInCart()
+
     navigate('/success')
   }
+
+  const cepValue = watch('CEP')
+
+  useEffect(() => {
+    if (cepValue[8] !== '_' && cepValue.length > 0) {
+      axios
+        .get(`https://cep.awesomeapi.com.br/json/${cepValue}`)
+        .then(response => {
+          const {
+            address_name: street,
+            state: UF,
+            district,
+            city,
+          } = response.data
+          setValue('UF', UF)
+          setValue('city', city)
+          setValue('street', street)
+          setValue('district', district)
+          clearErrors('CEP')
+        })
+        .catch((error: AxiosError) => {
+          const statusCode = error.response?.status
+
+          if (statusCode === 400 || statusCode === 404) {
+            setError('CEP', { message: 'CEP não encontrado' })
+          }
+        })
+    }
+  }, [cepValue])
 
   return (
     <CheckoutContainerForm onSubmit={handleSubmit(handleConfirmOrder)}>
