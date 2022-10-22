@@ -8,9 +8,11 @@ import {
 } from 'phosphor-react'
 import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import * as zod from 'zod'
 
 import { PrimaryButton } from '../../components/PrimaryButton'
+import { CheckoutDataContext } from '../../contexts/CheckoutDataContext'
 import { CoffeeContext, ICoffee } from '../../contexts/CoffeeContext'
 import { formatCoffeePrice } from '../../helpers/formatCoffeePrice'
 import { SelectedCoffeeItem } from './components/SelectedCoffeeItem'
@@ -56,6 +58,8 @@ type CheckoutFormInputs = zod.infer<typeof checkoutFormSchema>
 
 export function Checkout() {
   const { coffeesInCart } = useContext(CoffeeContext)
+  const { setCheckoutData } = useContext(CheckoutDataContext)
+  const navigate = useNavigate()
 
   const {
     handleSubmit,
@@ -111,8 +115,23 @@ export function Checkout() {
   const isConfirmButtonDisabled = sumOfCoffeesPrice === 0
 
   function handleConfirmOrder(data: CheckoutFormInputs) {
-    console.log(data)
-    console.log(errors)
+    setCheckoutData({
+      CEP: data.CEP,
+      city: data.city,
+      district: data.district,
+      number: data.number,
+      paymentMethod: data.paymentMethod,
+      street: data.street,
+      UF: data.UF,
+      complement: data.complement,
+      cost: {
+        deliveryCost: deliveryCost,
+        subtotal: sumOfCoffeesPrice,
+        totalCost: totalCost,
+      },
+    })
+
+    navigate('/success')
   }
 
   return (

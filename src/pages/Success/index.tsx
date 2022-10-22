@@ -1,4 +1,7 @@
 import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
+import { useContext } from 'react'
+import { Navigate } from 'react-router-dom'
+import { CheckoutDataContext } from '../../contexts/CheckoutDataContext'
 import {
   IconWrapper,
   Illustration,
@@ -9,45 +12,74 @@ import {
 } from './style'
 
 export function Success() {
-  return (
-    <SuccessPageContainer>
-      <div>
-        <h1>Uhu! Pedido confirmado</h1>
-        <h3>Agora é só aguardar que logo o café chegará até você</h3>
+  const { checkoutData } = useContext(CheckoutDataContext)
 
-        <OrderInfo>
-          <OrderItem>
-            <IconWrapper iconBg="purple">
-              <MapPin size={16} weight="fill" />
-            </IconWrapper>
-            <div>
-              <span>
-                Entrega em <TextBold>Rua João Daniel Martinelli, 102</TextBold>
-              </span>
-              <span> Farrapos- Porto Alegre, RS</span>
-            </div>
-          </OrderItem>
-          <OrderItem>
-            <IconWrapper iconBg="yellow">
-              <Timer size={16} weight="fill" />
-            </IconWrapper>
-            <div>
-              <span>Previsão de entrega</span>
-              <TextBold>20 min - 30 min </TextBold>
-            </div>
-          </OrderItem>
-          <OrderItem>
-            <IconWrapper iconBg="yellow-dark">
-              <CurrencyDollar size={16} weight="fill" />
-            </IconWrapper>
-            <div>
-              <span>Pagamento na entrega</span>
-              <TextBold>Cartão de crédito</TextBold>
-            </div>
-          </OrderItem>
-        </OrderInfo>
-      </div>
-      <Illustration src="./motoboy-illustration.png" />
-    </SuccessPageContainer>
+  function returnFormattedPaymentMethod(
+    paymentMethod: typeof checkoutData.paymentMethod
+  ) {
+    switch (paymentMethod) {
+      case 'cash':
+        return 'Dinheiro'
+      case 'credit_card':
+        return 'Cartão de crédito'
+      case 'debit_card':
+        return 'Cartão de débito'
+    }
+  }
+
+  return (
+    <>
+      {checkoutData.cost.totalCost ? (
+        <SuccessPageContainer>
+          <div>
+            <h1>Uhu! Pedido confirmado</h1>
+            <h3>Agora é só aguardar que logo o café chegará até você</h3>
+
+            <OrderInfo>
+              <OrderItem>
+                <IconWrapper iconBg="purple">
+                  <MapPin size={16} weight="fill" />
+                </IconWrapper>
+                <div>
+                  <span>
+                    Entrega em{' '}
+                    <TextBold>
+                      {checkoutData.street}, {checkoutData.number}
+                    </TextBold>
+                  </span>
+                  <span>
+                    {checkoutData.district} - {checkoutData.city},{' '}
+                    {checkoutData.UF}
+                  </span>
+                </div>
+              </OrderItem>
+              <OrderItem>
+                <IconWrapper iconBg="yellow">
+                  <Timer size={16} weight="fill" />
+                </IconWrapper>
+                <div>
+                  <span>Previsão de entrega</span>
+                  <TextBold>20 min - 30 min </TextBold>
+                </div>
+              </OrderItem>
+              <OrderItem>
+                <IconWrapper iconBg="yellow-dark">
+                  <CurrencyDollar size={16} weight="fill" />
+                </IconWrapper>
+                <div>
+                  <span>Pagamento na entrega</span>
+                  <TextBold>
+                    {returnFormattedPaymentMethod(checkoutData.paymentMethod)}
+                  </TextBold>
+                </div>
+              </OrderItem>
+            </OrderInfo>
+          </div>
+          <Illustration src="./motoboy-illustration.png" />
+        </SuccessPageContainer>
+      ) : (
+        <Navigate to="/checkout" />
+      )}
+    </>
   )
 }
