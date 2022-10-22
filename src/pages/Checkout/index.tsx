@@ -23,19 +23,32 @@ import {
   FormGrid,
   FormHeader,
   FormInput,
+  FormInputWrapper,
+  InputErrorMessageText,
   PaymentContainer,
   PaymentHeader,
   SelectCoffeeWrapper,
 } from './style'
 
 const checkoutFormSchema = zod.object({
-  CEP: zod.string(),
-  street: zod.string(),
-  number: zod.string(),
-  complement: zod.string(),
-  district: zod.string(),
-  city: zod.string(),
-  UF: zod.string().min(2).max(2),
+  CEP: zod
+    .string()
+    .min(8, 'Insira um CEP valido')
+    .regex(/[0-9]{5}-[0-9]{3}/, 'Insira um CEP valido'),
+  street: zod.string().min(1, 'Insira a rua do endereço de entrega'),
+  number: zod
+    .string({
+      required_error: 'Insira o número do endereço de entrega',
+    })
+    .min(1, 'Insira o número do endereço de entrega'),
+
+  complement: zod.string().optional(),
+  district: zod.string().min(1, 'Insira o bairro do endereço de entrega'),
+  city: zod.string().min(1, 'Insira a cidade do endereço de entrega'),
+  UF: zod
+    .string()
+    .min(2, 'Insira o UF do endereço de entrega')
+    .max(2, 'Insira o UF do endereço de entrega'),
   paymentMethod: zod.enum(['credit_card', 'debit_card', 'cash']),
 })
 
@@ -44,11 +57,40 @@ type CheckoutFormInputs = zod.infer<typeof checkoutFormSchema>
 export function Checkout() {
   const { coffeesInCart } = useContext(CoffeeContext)
 
-  const { handleSubmit, control } = useForm<CheckoutFormInputs>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<CheckoutFormInputs>({
     resolver: zodResolver(checkoutFormSchema),
+    defaultValues: {
+      paymentMethod: 'credit_card',
+      CEP: '',
+      city: '',
+      complement: '',
+      district: '',
+      number: '',
+      street: '',
+      UF: '',
+    },
   })
 
   const sumOfCoffeesPrice = calculateSumOfCoffeesPrice(coffeesInCart)
+  const formattedSumOfCoffeesPrice = formatSubOfCoffeesPrice(sumOfCoffeesPrice)
+
+  function formatSubOfCoffeesPrice(number: number) {
+    return number
+      .toFixed(1)
+      .split('')
+      .map(char => {
+        if (char === '.') {
+          return ','
+        } else {
+          return char
+        }
+      })
+      .join('')
+  }
 
   function calculateSumOfCoffeesPrice(coffeeList: ICoffee[]) {
     let priceAmount = 0
@@ -70,6 +112,7 @@ export function Checkout() {
 
   function handleConfirmOrder(data: CheckoutFormInputs) {
     console.log(data)
+    console.log(errors)
   }
 
   return (
@@ -89,34 +132,47 @@ export function Checkout() {
             <Controller
               control={control}
               name="CEP"
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 return (
-                  <FormInput
-                    gridArea="CEP"
-                    placeholder="CEP"
-                    value={field.value}
-                    onChange={event => {
-                      const inputValue = event.target.value
-                      field.onChange(inputValue)
-                    }}
-                  />
+                  <FormInputWrapper gridArea="CEP">
+                    <FormInput
+                      mask="99999-999"
+                      placeholder="CEP"
+                      value={field.value}
+                      onChange={event => {
+                        const inputValue = event.target.value
+                        field.onChange(inputValue)
+                      }}
+                    />
+                    {fieldState.error && (
+                      <InputErrorMessageText>
+                        {fieldState.error.message}
+                      </InputErrorMessageText>
+                    )}
+                  </FormInputWrapper>
                 )
               }}
             />
             <Controller
               control={control}
               name="street"
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 return (
-                  <FormInput
-                    gridArea="ST"
-                    placeholder="Rua"
-                    value={field.value}
-                    onChange={event => {
-                      const inputValue = event.target.value
-                      field.onChange(inputValue)
-                    }}
-                  />
+                  <FormInputWrapper gridArea="ST">
+                    <FormInput
+                      placeholder="Rua"
+                      value={field.value}
+                      onChange={event => {
+                        const inputValue = event.target.value
+                        field.onChange(inputValue)
+                      }}
+                    />
+                    {fieldState.error && (
+                      <InputErrorMessageText>
+                        {fieldState.error.message}
+                      </InputErrorMessageText>
+                    )}
+                  </FormInputWrapper>
                 )
               }}
             />
@@ -124,17 +180,23 @@ export function Checkout() {
             <Controller
               control={control}
               name="number"
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 return (
-                  <FormInput
-                    gridArea="NU"
-                    placeholder="Número"
-                    value={field.value}
-                    onChange={event => {
-                      const inputValue = event.target.value
-                      field.onChange(inputValue)
-                    }}
-                  />
+                  <FormInputWrapper gridArea="NU">
+                    <FormInput
+                      placeholder="Número"
+                      value={field.value}
+                      onChange={event => {
+                        const inputValue = event.target.value
+                        field.onChange(inputValue)
+                      }}
+                    />
+                    {fieldState.error && (
+                      <InputErrorMessageText>
+                        {fieldState.error.message}
+                      </InputErrorMessageText>
+                    )}
+                  </FormInputWrapper>
                 )
               }}
             />
@@ -142,17 +204,24 @@ export function Checkout() {
             <Controller
               control={control}
               name="complement"
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 return (
-                  <FormInput
-                    gridArea="COM"
-                    placeholder="Complemento"
-                    value={field.value}
-                    onChange={event => {
-                      const inputValue = event.target.value
-                      field.onChange(inputValue)
-                    }}
-                  />
+                  <FormInputWrapper gridArea="COM">
+                    <FormInput
+                      placeholder="Complemento"
+                      value={field.value}
+                      onChange={event => {
+                        const inputValue = event.target.value
+                        field.onChange(inputValue)
+                      }}
+                    />
+
+                    {fieldState.error && (
+                      <InputErrorMessageText>
+                        {fieldState.error.message}
+                      </InputErrorMessageText>
+                    )}
+                  </FormInputWrapper>
                 )
               }}
             />
@@ -160,34 +229,48 @@ export function Checkout() {
             <Controller
               control={control}
               name="district"
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 return (
-                  <FormInput
-                    gridArea="DI"
-                    placeholder="Bairro"
-                    value={field.value}
-                    onChange={event => {
-                      const inputValue = event.target.value
-                      field.onChange(inputValue)
-                    }}
-                  />
+                  <FormInputWrapper gridArea="DI">
+                    <FormInput
+                      placeholder="Bairro"
+                      value={field.value}
+                      onChange={event => {
+                        const inputValue = event.target.value
+                        field.onChange(inputValue)
+                      }}
+                    />
+
+                    {fieldState.error && (
+                      <InputErrorMessageText>
+                        {fieldState.error.message}
+                      </InputErrorMessageText>
+                    )}
+                  </FormInputWrapper>
                 )
               }}
             />
             <Controller
               control={control}
               name="city"
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 return (
-                  <FormInput
-                    gridArea="CI"
-                    placeholder="Cidade"
-                    value={field.value}
-                    onChange={event => {
-                      const inputValue = event.target.value
-                      field.onChange(inputValue)
-                    }}
-                  />
+                  <FormInputWrapper gridArea="CI">
+                    <FormInput
+                      placeholder="Cidade"
+                      value={field.value}
+                      onChange={event => {
+                        const inputValue = event.target.value
+                        field.onChange(inputValue)
+                      }}
+                    />
+
+                    {fieldState.error && (
+                      <InputErrorMessageText>
+                        {fieldState.error.message}
+                      </InputErrorMessageText>
+                    )}
+                  </FormInputWrapper>
                 )
               }}
             />
@@ -195,17 +278,24 @@ export function Checkout() {
             <Controller
               control={control}
               name="UF"
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 return (
-                  <FormInput
-                    gridArea="UF"
-                    placeholder="UF"
-                    value={field.value}
-                    onChange={event => {
-                      const inputValue = event.target.value
-                      field.onChange(inputValue)
-                    }}
-                  />
+                  <FormInputWrapper gridArea="UF">
+                    <FormInput
+                      mask="aa"
+                      placeholder="UF"
+                      value={field.value}
+                      onChange={event => {
+                        const inputValue = event.target.value
+                        field.onChange(inputValue.toUpperCase())
+                      }}
+                    />
+                    {fieldState.error && (
+                      <InputErrorMessageText>
+                        {fieldState.error.message}
+                      </InputErrorMessageText>
+                    )}
+                  </FormInputWrapper>
                 )
               }}
             />
@@ -266,7 +356,7 @@ export function Checkout() {
           <footer>
             <div>
               <span>Total dos itens</span>
-              <span>R$ {sumOfCoffeesPrice}</span>
+              <span>R$ {formattedSumOfCoffeesPrice}</span>
             </div>
             <div>
               <span>Entrega</span>

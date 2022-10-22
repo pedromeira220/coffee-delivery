@@ -1,6 +1,7 @@
+import ReactInputMask from 'react-input-mask'
 import styled from 'styled-components'
 
-export const StyledInput = styled.input`
+export const StyledInput = styled(ReactInputMask)`
   background-color: ${props => props.theme['base-input']};
   border: 1px solid ${props => props.theme['base-button']};
   padding: 0.75rem;

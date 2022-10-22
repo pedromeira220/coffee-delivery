@@ -59,13 +59,22 @@ export const FormGrid = styled.div`
 
   grid-template-areas: 'CEP n n' 'ST ST ST' 'NU COM COM' 'DI CI UF';
 `
-
-interface FormInputProps {
+interface FormInputWrapperProps {
   gridArea: string
 }
 
-export const FormInput = styled(Input)<FormInputProps>`
+export const FormInputWrapper = styled.div<FormInputWrapperProps>`
   grid-area: ${props => props.gridArea};
+  display: inline;
+`
+
+export const FormInput = styled(Input)`
+  width: 100%;
+`
+
+export const InputErrorMessageText = styled.span`
+  font-size: 0.75rem;
+  color: ${props => props.theme['error']};
 `
 
 export const PaymentContainer = styled.div`
