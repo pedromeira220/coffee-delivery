@@ -85,6 +85,75 @@ export function CoffeeContextProvider({ children }: CoffeeContextProvider) {
       img: './coffee-leite.png',
       tagList: ['Tradicional', 'Com leite'],
     },
+    {
+      id: '6',
+      title: 'Latte',
+      description:
+        'Uma dose de café expresso com o dobro de leite e espuma cremosa',
+      price: 13.9,
+      img: './coffee-latte.png',
+      tagList: ['Tradicional', 'Com leite'],
+    },
+    {
+      id: '7',
+      title: 'Capuccino',
+      description:
+        'Bebida com canela feita de doses iguais de café, leite e espuma',
+      price: 14.5,
+      img: './coffee-capuccino.png',
+      tagList: ['Tradicional', 'Com leite'],
+    },
+    {
+      id: '8',
+      title: 'Macchiato',
+      description:
+        'Café expresso misturado com um pouco de leite quente e espuma',
+      price: 13.5,
+      img: './coffee-macchiato.png',
+      tagList: ['Tradicional', 'Com leite'],
+    },
+    {
+      id: '9',
+      title: 'Mocaccino',
+      description: 'Café expresso com calda de chocolate, pouco leite e espuma',
+      price: 13.5,
+      img: './coffee-mocaccino.png',
+      tagList: ['Tradicional', 'Com leite'],
+    },
+    {
+      id: '10',
+      title: 'Chocolate Quente',
+      description:
+        'Bebida feita com chocolate dissolvido no leite quente e café',
+      price: 15.3,
+      img: './coffee-hot-milk.png',
+      tagList: ['Especial', 'Com leite'],
+    },
+    {
+      id: '11',
+      title: 'Cubano',
+      description:
+        'Drink gelado de café expresso com rum, creme de leite e hortelã',
+      price: 12.3,
+      img: './coffee-cubano.png',
+      tagList: ['Especial', 'Alcoólico', 'Gelado'],
+    },
+    {
+      id: '12',
+      title: 'Havaino',
+      description: 'Bebida adocicada preparada com café e leite de coco',
+      price: 13.3,
+      img: './coffee-havaino.png',
+      tagList: ['Especial'],
+    },
+    {
+      id: '13 ',
+      title: 'Irlandês',
+      description: 'Bebida a base de café, uísque irlandês, açúcar e Chantilly',
+      price: 13.3,
+      img: './coffee-irlandes.png',
+      tagList: ['Especial'],
+    },
   ])
 
   const [coffeesInCart, dispatch] = useReducer(coffeesInCartReducer, [])
