@@ -44,8 +44,6 @@ export function Header() {
     '@coffee-delivery:cep-1.0.0'
   )
   useEffect(() => {
-    console.log(cepFromStorage)
-
     axios
       .get(`https://cep.awesomeapi.com.br/json/${cepFromStorage}`)
       .then(response => {

@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import { toast } from 'react-toastify'
 import { CoffeeContext, IAvailableCoffee } from '../../contexts/CoffeeContext'
 import { formatCoffeePrice } from '../../helpers/formatCoffeePrice'
 import { ButtonIcon } from '../ButtonIcon'
@@ -30,6 +31,12 @@ export function CoffeeItem({ availableCoffee }: CoffeeItemProps) {
     }
     addCoffeeInCart(availableCoffee, amountOfCoffee)
     setAmountOfCoffee(0)
+
+    toast.success(
+      `${amountOfCoffee} café${amountOfCoffee > 1 ? 's' : ''} adicionado${
+        amountOfCoffee > 1 ? 's' : ''
+      } ao carrinho`
+    )
   }
 
   function handleAmountCoffeeInputChange(
