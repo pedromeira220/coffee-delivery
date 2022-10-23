@@ -139,30 +139,46 @@ export function Checkout() {
 
   const cepValue = watch('CEP')
 
+  async function fetchCEPAndSetInputValues(CEP: string) {
+    return axios
+      .get(`https://cep.awesomeapi.com.br/json/${CEP}`)
+      .then(response => {
+        const {
+          address_name: street,
+          state: UF,
+          district,
+          city,
+        } = response.data
+        setValue('UF', UF)
+        setValue('city', city)
+        setValue('street', street)
+        setValue('district', district)
+        clearErrors('CEP')
+      })
+      .catch((error: AxiosError) => {
+        const statusCode = error.response?.status
+
+        if (statusCode === 400 || statusCode === 404) {
+          setError('CEP', { message: 'CEP não encontrado' })
+        }
+      })
+  }
+
+  useEffect(() => {
+    const cepFromStorage = localStorageManager.getItem(
+      '@coffee-delivery:cep-1.0.0'
+    )
+
+    if (cepFromStorage) {
+      setValue('CEP', cepFromStorage)
+
+      fetchCEPAndSetInputValues(cepFromStorage)
+    }
+  }, [])
+
   useEffect(() => {
     if (cepValue[8] !== '_' && cepValue.length > 0) {
-      axios
-        .get(`https://cep.awesomeapi.com.br/json/${cepValue}`)
-        .then(response => {
-          const {
-            address_name: street,
-            state: UF,
-            district,
-            city,
-          } = response.data
-          setValue('UF', UF)
-          setValue('city', city)
-          setValue('street', street)
-          setValue('district', district)
-          clearErrors('CEP')
-        })
-        .catch((error: AxiosError) => {
-          const statusCode = error.response?.status
-
-          if (statusCode === 400 || statusCode === 404) {
-            setError('CEP', { message: 'CEP não encontrado' })
-          }
-        })
+      fetchCEPAndSetInputValues(cepValue)
     }
   }, [cepValue])
 
