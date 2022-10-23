@@ -114,27 +114,29 @@ export function Checkout() {
   const isConfirmButtonDisabled = sumOfCoffeesPrice === 0
 
   function handleConfirmOrder(data: CheckoutFormInputs) {
-    setCheckoutData({
-      CEP: data.CEP,
-      city: data.city,
-      district: data.district,
-      number: data.number,
-      paymentMethod: data.paymentMethod,
-      street: data.street,
-      UF: data.UF,
-      complement: data.complement,
-      cost: {
-        deliveryCost: deliveryCost,
-        subtotal: sumOfCoffeesPrice,
-        totalCost: totalCost,
-      },
-    })
+    if (confirm('Confirmar o envio do pedido?')) {
+      setCheckoutData({
+        CEP: data.CEP,
+        city: data.city,
+        district: data.district,
+        number: data.number,
+        paymentMethod: data.paymentMethod,
+        street: data.street,
+        UF: data.UF,
+        complement: data.complement,
+        cost: {
+          deliveryCost: deliveryCost,
+          subtotal: sumOfCoffeesPrice,
+          totalCost: totalCost,
+        },
+      })
 
-    clearCoffeesInCart()
+      clearCoffeesInCart()
 
-    localStorageManager.setItem('@coffee-delivery:cep-1.0.0', data.CEP)
+      localStorageManager.setItem('@coffee-delivery:cep-1.0.0', data.CEP)
 
-    navigate('/success')
+      navigate('/success')
+    }
   }
 
   const cepValue = watch('CEP')

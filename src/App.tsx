@@ -16,7 +16,7 @@ export function App() {
           <CheckoutDataContextProvider>
             <ToastContainer
               position="bottom-right"
-              autoClose={5000}
+              autoClose={2.5 * 1000} //2.5 seconds
               hideProgressBar={false}
               newestOnTop={false}
               closeOnClick
