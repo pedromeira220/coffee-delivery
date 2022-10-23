@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react'
 import { CoffeeContext, IAvailableCoffee } from '../../contexts/CoffeeContext'
 import { formatCoffeePrice } from '../../helpers/formatCoffeePrice'
-import { AmountCoffeeInput } from '../AmountCoffeeInput'
 import { ButtonIcon } from '../ButtonIcon'
+import { CoffeesAmountInput } from '../CoffeesAmountInput'
 import {
   CoffeeImage,
   CoffeeItemContainer,
@@ -41,6 +41,20 @@ export function CoffeeItem({ availableCoffee }: CoffeeItemProps) {
     setAmountOfCoffee(parsedAmount)
   }
 
+  function onDecrementAmountCoffees() {
+    setAmountOfCoffee(state => {
+      if (state > 0) {
+        return state - 1
+      }
+
+      return state
+    })
+  }
+
+  function onIncrementAmountCoffees() {
+    setAmountOfCoffee(state => state + 1)
+  }
+
   return (
     <CoffeeItemContainer>
       <div>
@@ -58,9 +72,10 @@ export function CoffeeItem({ availableCoffee }: CoffeeItemProps) {
           <CurrencySymbol>R$</CurrencySymbol>{' '}
           <CoffeePrice>{formattedCoffeePrice}</CoffeePrice>
         </span>
-        <AmountCoffeeInput
-          onChange={handleAmountCoffeeInputChange}
-          value={amountOfCoffee}
+        <CoffeesAmountInput
+          decrementAmountCoffees={onDecrementAmountCoffees}
+          incrementAmountCoffees={onIncrementAmountCoffees}
+          amount={amountOfCoffee}
         />
         <ButtonIcon onClick={handleAddToCart} />
       </CoffeeItemFooter>

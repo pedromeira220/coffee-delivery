@@ -19,4 +19,4 @@ export const defaultTheme = {
   background: '#FAFAFA',
   white: '#FFFFFF',
   error: '#dc2626',
-}
+} as const

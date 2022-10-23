@@ -1,5 +1,5 @@
-import { useContext, useState } from 'react'
-import { AmountCoffeeInput } from '../../../../components/AmountCoffeeInput'
+import { useContext, useEffect, useState } from 'react'
+import { CoffeesAmountInput } from '../../../../components/CoffeesAmountInput'
 import { RemoveButton } from '../../../../components/RemoveButton'
 import { CoffeeContext, ICoffee } from '../../../../contexts/CoffeeContext'
 import { formatCoffeePrice } from '../../../../helpers/formatCoffeePrice'
@@ -21,20 +21,27 @@ export function SelectedCoffeeItem({ coffee }: SelectedCoffeeItemProps) {
 
   const formattedCoffeePrice = formatCoffeePrice(coffee.price)
 
-  function handleAmountCoffeeInputChange(
-    event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const amountInText = event.target.value
-    const amount = parseInt(amountInText)
-
-    setAmountOfCoffee(amount)
-
-    updateCoffeeInCartById(coffee.id, amount)
-  }
-
   function handleDeleteCoffee() {
     deleteCoffeeInCartById(coffee.id)
   }
+
+  function onDecrementAmountCoffees() {
+    setAmountOfCoffee(state => {
+      if (state > 0) {
+        return state - 1
+      }
+
+      return state
+    })
+  }
+
+  function onIncrementAmountCoffees() {
+    setAmountOfCoffee(state => state + 1)
+  }
+
+  useEffect(() => {
+    updateCoffeeInCartById(coffee.id, amountOfCoffee)
+  }, [amountOfCoffee])
 
   return (
     <SelectedCoffeeItemContainer>
@@ -43,9 +50,10 @@ export function SelectedCoffeeItem({ coffee }: SelectedCoffeeItemProps) {
         <span>
           <span>{coffee.title}</span>
           <ButtonsWrapper>
-            <AmountCoffeeInput
-              value={amountOfCoffee}
-              onChange={handleAmountCoffeeInputChange}
+            <CoffeesAmountInput
+              amount={amountOfCoffee}
+              decrementAmountCoffees={onDecrementAmountCoffees}
+              incrementAmountCoffees={onIncrementAmountCoffees}
             />
             <RemoveButton
               text="REMOVER"
