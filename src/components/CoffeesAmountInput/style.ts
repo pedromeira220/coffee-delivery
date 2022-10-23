@@ -11,6 +11,7 @@ export const CoffeesAmountInputContainer = styled.span`
   width: 4.5rem;
   padding: 0.5rem;
   gap: 0.25rem;
+  margin-right: 0.5rem;
 
   button {
     border: 0;

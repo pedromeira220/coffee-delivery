@@ -48,6 +48,7 @@ export const FormHeader = styled.header`
     color: ${props => props.theme['base-text']};
     line-height: 130%;
     font-size: 0.875rem;
+    word-wrap: wrap;
   }
 `
 
@@ -58,6 +59,11 @@ export const FormGrid = styled.div`
   margin-top: 2rem;
 
   grid-template-areas: 'CEP n n' 'ST ST ST' 'NU COM COM' 'DI CI UF';
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'CEP' 'ST' 'NU ' 'COM' 'DI' 'CI' 'UF';
+  }
 `
 interface FormInputWrapperProps {
   gridArea: string

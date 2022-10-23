@@ -8,6 +8,7 @@ export const StyledInput = styled(ReactInputMask)`
   font-size: 0.875rem;
   color: ${props => props.theme['base-text']};
   border-radius: 4px;
+  width: 100%;
 
   &::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
