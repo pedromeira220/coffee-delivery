@@ -16,6 +16,7 @@ import { PrimaryButton } from '../../components/PrimaryButton'
 import { CheckoutDataContext } from '../../contexts/CheckoutDataContext'
 import { CoffeeContext, ICoffee } from '../../contexts/CoffeeContext'
 import { formatCoffeePrice } from '../../helpers/formatCoffeePrice'
+import { localStorageManager } from '../../utils/localStorageManager'
 import { SelectedCoffeeItem } from './components/SelectedCoffeeItem'
 import {
   CheckoutContainerForm,
@@ -130,6 +131,8 @@ export function Checkout() {
     })
 
     clearCoffeesInCart()
+
+    localStorageManager.setItem('@coffee-delivery:cep-1.0.0', data.CEP)
 
     navigate('/success')
   }
